@@ -7,21 +7,16 @@ import NoteAPI from "./views/NoteAPI";
 
 const app = document.querySelector("#app");
 // console.log("this is app", app);
-// const view = new Notes(app, {
-//   onNoteSelect() {
-//     console.log("note has been selected");
-//   },
-// });
-
-NoteAPI.saveNote({
-  id: 979626,
-  title: "New Note!",
-  body: "This is new Notes updated",
+const NoteView = new Notes(app, {
+  onNoteAdd() {
+    console.log("note has been selected");
+  },
+  onNoteEdit(newTitle, newBody) {
+    console.log(newTitle, newBody);
+  },
 });
 
-NoteAPI.deleteNote(979626);
-
-console.log("index.js is loaded", NoteAPI.getAllNotes());
+NoteView.updateNiteList(NoteAPI.getAllNotes());
 
 const navigateTo = (url) => {
   history.pushState(null, null, url);
@@ -36,7 +31,7 @@ const router = async () => {
     { path: "/settings", view: Settings },
     {
       path: "/notes",
-      view: Notes,
+      view: NoteView,
     },
   ];
 
@@ -56,35 +51,32 @@ const router = async () => {
     };
   }
 
-  const view = new match.route.view();
   if (match.route.path === "/notes") {
-    console.log("this is view", view);
-    view.Notes.root.innerHTML = `
-    <div class="notes" id="noteRoot">
-      <div class="notes__sidebar">
-        <button class="notes__add" type="button">
-          Add Note
-        </button>
-        <div class="notes__list">
-            <div class="notes__list-item notes__list-item--selected">
-                <div class="notes__small-title">Lecture Notes</div>
-                <div class="notes__small-body">I learnt nothing today.</div>
-                <div class="notes__small-updated">Thursday 3:30pm</div>
-            </div>
-        </div>
-      </div>
-      <div class="notes__preview">
-          <input class="notes__title" type="text" placeholder="Enter a title...">
-          <textarea class="notes__body">I am the notes body...</textarea>
-      </div>
-    </div>
-    `;
-    // new Notes(app, {
-    //     onNoteSelect() {
-    //       console.log("note has been selected");
-    //     },
-    //   }),
+    const NoteView = match.route.view;
+    console.log(NoteView);
+    // const NoteView = match.route.view();
+    // NoteView.root.innerHTML = `
+    // <div class="notes" id="noteRoot">
+    //   <div class="notes__sidebar">
+    //     <button class="notes__add" type="button">
+    //       Add Note
+    //     </button>
+    //     <div class="notes__list">
+    //         <div class="notes__list-item notes__list-item--selected">
+    //             <div class="notes__small-title">Lecture Notes</div>
+    //             <div class="notes__small-body">I learnt nothing today.</div>
+    //             <div class="notes__small-updated">Thursday 3:30pm</div>
+    //         </div>
+    //     </div>
+    //   </div>
+    //   <div class="notes__preview">
+    //       <input class="notes__title" type="text" placeholder="New Notes">
+    //       <textarea class="notes__body">Take Notes</textarea>
+    //   </div>
+    // </div>
+    // `;
   } else {
+    const view = new match.route.view();
     app.innerHTML = await view.getHtml();
   }
 };
