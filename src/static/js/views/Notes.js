@@ -9,7 +9,7 @@ export default class extends AbstractView {
   async getHtml() {
     return `
     <body>
-      <div class="notes" id="app">
+      <div class="notes">
         <div class="notes__sidebar">
                 <button class="notes__add" type="button">Add Note</button>
                 <div class="notes__list">
