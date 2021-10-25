@@ -3,7 +3,12 @@ const path = require("path");
 
 const app = express();
 
-app.use("/static", express.static(path.resolve(__dirname, "src/static")));
+app.use(
+  "/static",
+  express.static(path.resolve(__dirname, "src/static"), {
+    extensions: ["js", "css"],
+  })
+);
 
 const port = 8080;
 
