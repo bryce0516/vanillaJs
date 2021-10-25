@@ -7,7 +7,8 @@ export default class {
     document.title = title;
   }
 
-  async getHtml() {
+  async getHtml(title) {
+    console.log("this isabst ", title);
     return "";
   }
 }
