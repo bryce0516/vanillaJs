@@ -1,6 +1,8 @@
 import Dashboard from "./views/Dashboard.js";
 import Posts from "./views/Posts.js";
 import Settings from "./views/Settings.js";
+import Notes from "./views/Notes";
+
 console.log("index.js is loaded");
 const navigateTo = (url) => {
   history.pushState(null, null, url);
@@ -12,6 +14,7 @@ const router = async () => {
     { path: "/", view: Dashboard },
     { path: "/posts", view: Posts },
     { path: "/settings", view: Settings },
+    { path: "/notes", view: Notes },
   ];
 
   const potentialMatches = routes.map((element) => {
