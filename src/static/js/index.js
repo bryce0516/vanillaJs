@@ -3,20 +3,18 @@ import Posts from "./views/Posts.js";
 import Settings from "./views/Settings.js";
 import Notes from "./views/Notes";
 import NoteAPI from "./views/NoteAPI";
+import NoteApp from "./views/NoteApp";
 // import NotesView from "./views/NoteViews";
 
 const app = document.querySelector("#app");
 // console.log("this is app", app);
-const NoteView = new Notes(app, {
-  onNoteAdd() {
-    console.log("note has been selected");
-  },
-  onNoteEdit(newTitle, newBody) {
-    console.log(newTitle, newBody);
-  },
-});
+const NoteView = new NoteApp(app);
 
-NoteView.updateNiteList(NoteAPI.getAllNotes());
+// const notes = NoteAPI.getAllNotes();
+
+// NoteView.updateNoteList(notes);
+
+// NoteView.updateActiveNote(notes[0]);
 
 const navigateTo = (url) => {
   history.pushState(null, null, url);
@@ -52,13 +50,12 @@ const router = async () => {
   }
 
   if (match.route.path === "/notes") {
-    const NoteView = match.route.view;
-    console.log(NoteView);
+    match.route.view;
     // const NoteView = match.route.view();
     // NoteView.root.innerHTML = `
     // <div class="notes" id="noteRoot">
     //   <div class="notes__sidebar">
-    //     <button class="notes__add" type="button">
+    //     <button class="notes__add" type="bton">
     //       Add Note
     //     </button>
     //     <div class="notes__list">

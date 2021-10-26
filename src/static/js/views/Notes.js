@@ -11,24 +11,14 @@ export default class Notes {
     this.onNoteEdit = onNoteEdit;
     this.onNoteDelete = onNoteDelete;
     this.root.innerHTML = `
-    <div class="notes" id="noteRoot">
-      <div class="notes__sidebar">
-        <button class="notes__add" type="button">
-          Add Note
-        </button>
-        <div class="notes__list">
-            <div class="notes__list-item notes__list-item--selected">
-                <div class="notes__small-title">Lecture Notes</div>
-                <div class="notes__small-body">I learnt nothing today.</div>
-                <div class="notes__small-updated">Thursday 3:30pm</div>
+            <div class="notes__sidebar">
+                <button class="notes__add" type="button">Add Note</button>
+                <div class="notes__list"></div>
             </div>
-        </div>
-      </div>
-      <div class="notes__preview">
-          <input class="notes__title" type="text" placeholder="New Notes">
-          <textarea class="notes__body">Take Notes</textarea>
-      </div>
-    </div>
+            <div class="notes__preview">
+                <input class="notes__title" type="text" placeholder="New Note...">
+                <textarea class="notes__body">Take Note...</textarea>
+            </div>
     `;
 
     const btnAddNote = this.root.querySelector(".notes__add");
@@ -47,29 +37,31 @@ export default class Notes {
         this.onNoteEdit(updatedTitle, updatedBody);
       });
     });
+
+    // this.updateNotePreviewVisiblility();
   }
 
   _createListItemHTML(id, title, body, updated) {
     const MAX_BODY_LENGTH = 60;
 
     return `
-    <div class="notes__list-item" data-note-id="${id}">
-      <div class="notes__small-title">${title}</div>
-      <div class="notes__small-body">
-      ${body.substring(0, MAX_BODY_LENGTH)}
-      ${body.length > MAX_BODY_LENGTH ? "..." : ""}
-      </div>
-      <div class="notes__small-updated">
-        ${updated.toLocaleString(undefined, {
-          dateStyle: "full",
-          timeStyle: "short",
-        })}
-      </div>
-    </div>
+            <div class="notes__list-item" data-note-id="${id}">
+                <div class="notes__small-title">${title}</div>
+                <div class="notes__small-body">
+                    ${body.substring(0, MAX_BODY_LENGTH)}
+                    ${body.length > MAX_BODY_LENGTH ? "..." : ""}
+                </div>
+                <div class="notes__small-updated">
+                    ${updated.toLocaleString(undefined, {
+                      dateStyle: "full",
+                      timeStyle: "short",
+                    })}
+                </div>
+            </div>
     `;
   }
 
-  updateNiteList(notes) {
+  updateNoteList(notes) {
     const notesListContainer = this.root.querySelector(".notes__list");
 
     notesListContainer.innerHTML = "";
@@ -84,5 +76,44 @@ export default class Notes {
 
       notesListContainer.insertAdjacentHTML("beforeend", html);
     }
+    notesListContainer
+      .querySelectorAll(".notes__list-item")
+      .forEach((noteListItem) => {
+        if (noteListItem.dataset.noteId) {
+          noteListItem.dataset.noteId = Math.floor(Math.random() * 1000000);
+        }
+        noteListItem.addEventListener("click", () => {
+          this.onNoteSelect(noteListItem.dataset.noteId);
+        });
+
+        noteListItem.addEventListener("dblclick", () => {
+          const doDelete = confirm(
+            "Are you sure you wante to delete this note?"
+          );
+
+          if (doDelete) {
+            this.onNoteDelete(noteListItem.dataset.noteId);
+          }
+        });
+      });
+  }
+
+  updateActiveNote(note) {
+    this.root.querySelector(".notes__title").value = note.title;
+    this.root.querySelector(".notes__body").value = note.body;
+
+    this.root.querySelectorAll(".notes__list-item").forEach((noteListItem) => {
+      noteListItem.classList.remove("notes__list-item--selected");
+    });
+
+    this.root
+      .querySelector(`.notes__list-item`)
+      .classList.add("notes__list-item--selected");
+  }
+
+  updateNotePreviewVisiblility(visible) {
+    this.root.querySelector(".notes__preview").style.visible = visible
+      ? "visible"
+      : "hidden";
   }
 }
