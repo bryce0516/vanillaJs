@@ -34,16 +34,32 @@ export default class NoteApp {
   _handlers() {
     return {
       onNoteSelect: (noteId) => {
-        console.log("Note Selected : " + noteId);
+        const selectedNote = this.notes.find(
+          (element) => element.id === Number(noteId)
+        );
+        this._setActiveNotes(selectedNote);
       },
       onNoteAdd: () => {
+        const newNote = {
+          title: "New Note",
+          body: "Take note...",
+        };
+
+        NoteAPI.saveNote(newNote);
+        this._refreshNotes();
         console.log("Note add");
       },
       onNoteEdit: (title, body) => {
-        console.log(title, body);
+        NoteAPI.saveNote({
+          id: this.activeNote.id,
+          title,
+          body,
+        });
+        this._refreshNotes();
       },
       onNoteDelete: (noteId) => {
-        console.log(`Note Deleted : ${noteId}`);
+        NoteAPI.deleteNote(noteId);
+        this._refreshNotes();
       },
     };
   }
