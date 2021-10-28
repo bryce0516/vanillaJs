@@ -10,7 +10,7 @@ export default class {
         `;
     const postDom = this.root.querySelector(".posts");
 
-    console.log("postDom", postDom);
+    // console.log("postDom", postDom);
     // // const postDom = this.root.querySelector(".posts");
     // // console.log("this is post dom", postDom);
     // // document.addEventListener("DOMContentLoaded", () => {
@@ -21,54 +21,24 @@ export default class {
   }
 
   async dataFetching(postDom) {
-    console.log("inner fun", postDom);
-
     const posts = await this.postFetching();
-    for (const post of posts) {
-      const userId = post.userId;
-      const id = post.id;
-      const title = post.title;
-      const body = post.body;
 
-      postDom.insertAdjacentHTML(
+    posts.map((element) => {
+      const userId = element.userId;
+      const id = element.id;
+      const title = element.title;
+      const body = element.body;
+      this.root.querySelector(".posts").insertAdjacentHTML(
         "beforeend",
         `
-          <div class="post-item">
-            <p>${userId}</p>
-            <p>${id}</p>
-            <p>${title}</p>
-          </div>
+        <div class="post-item" style={{}}>
+          <p>${userId}</p>
+          <p>${id}</p>
+          <p>${title}</p>
+        </div>
       `
       );
-    }
-    // posts.map((element) => {
-    //   const userId = element.userId;
-    //   const id = element.id;
-    //   const title = element.title;
-    //   const body = element.body;
-
-    //   return postDom.insertAdjacentHTML(
-    //     "beforeend",
-    //     `
-
-    //   `
-    //   );
-    // });
-    //
-    // this.postFetching().map((element) => {
-    //   const userId = element.userId;
-    //   const id = element.id;
-    //   const title = element.title;
-    //   const body = element.body;
-
-    //   return (postDom.innerHTML = `
-    //         <div class="post-item">
-    //     <p>${userId}</p>
-    //             <p>${id}</p>
-    //                     <p>${title}</p>
-    //   </div>
-    //   `);
-    // });
+    });
   }
 
   // async dataFetching() {
