@@ -22,13 +22,17 @@ class App {
         : (element.isMatch = false)
     );
     console.log(this.router);
-    const routerMapping = this.router.find(
+    const currentRouter = this.router.find(
       (element) => element.isMatch === true
     );
 
-    if (routerMapping) {
-      const target = new routerMapping.view(this.root);
-      this.root.innerHTML = await target.render();
+    if (currentRouter) {
+      if (currentRouter.path === "/posts") {
+        new currentRouter.view(this.root);
+      } else {
+        const target = new currentRouter.view(this.root);
+        this.root.innerHTML = await target.render();
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import App from "./app/app";
 
-const root = document.getElementById(".notes");
+const root = document.getElementById("app");
 
 new App(root);

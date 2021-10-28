@@ -9,37 +9,38 @@ export default class {
           <div class="posts"></div>
         `;
     const postDom = this.root.querySelector(".posts");
-    // const postDom = this.root.querySelector(".posts");
-    // console.log("this is post dom", postDom);
-    // document.addEventListener("DOMContentLoaded", () => {
-    //   const value = this.postFetching();
-    //   console.log("After lisner", value);
-    // });
+
+    console.log("postDom", postDom);
+    // // const postDom = this.root.querySelector(".posts");
+    // // console.log("this is post dom", postDom);
+    // // document.addEventListener("DOMContentLoaded", () => {
+    // //   const value = this.postFetching();
+    // //   console.log("After lisner", value);
+    // // });
     this.dataFetching(postDom);
   }
 
   async dataFetching(postDom) {
-    const posts = await this.postFetching();
-    const postsdom = this.root.querySelector(".posts");
-    console.log("this is postdom", postDom);
-    console.log("this is root", postsdom);
-    // for (const post of posts) {
-    //   const userId = post.userId;
-    //   const id = post.id;
-    //   const title = post.title;
-    //   const body = post.body;
+    console.log("inner fun", postDom);
 
-    //   postDom.insertAdjacentHTML(
-    //     "beforeend",
-    //     `
-    //       <div class="post-item">
-    //         <p>${userId}</p>
-    //         <p>${id}</p>
-    //         <p>${title}</p>
-    //       </div>
-    //   `
-    //   );
-    // }
+    const posts = await this.postFetching();
+    for (const post of posts) {
+      const userId = post.userId;
+      const id = post.id;
+      const title = post.title;
+      const body = post.body;
+
+      postDom.insertAdjacentHTML(
+        "beforeend",
+        `
+          <div class="post-item">
+            <p>${userId}</p>
+            <p>${id}</p>
+            <p>${title}</p>
+          </div>
+      `
+      );
+    }
     // posts.map((element) => {
     //   const userId = element.userId;
     //   const id = element.id;

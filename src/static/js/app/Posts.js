@@ -6,6 +6,7 @@ export default class extends Wrapper {
     super();
     this.root = root;
     this.viewPage = new PostsView(this.root, this.handler());
+    // this.init();
   }
 
   handler() {
@@ -16,11 +17,8 @@ export default class extends Wrapper {
       },
     };
   }
-  async render() {
-    return `<div>
-        <p>
-          this is posts
-        </p>
-      </div>`;
+
+  init() {
+    this.viewPage.dataFetching();
   }
 }
